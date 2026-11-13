@@ -1,0 +1,4 @@
+r_star_case,r_star,taylor,balanced,inertial,taylor_bp,balanced_bp,inertial_bp
+low (25th pct),1.0,4.21,3.65,3.74,46,-10,-1
+median,1.25,4.46,3.9,3.77,70,15,2
+high (75th pct),1.5,4.71,4.15,3.81,96,40,6

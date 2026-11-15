@@ -1,6 +1,7 @@
 # EC4436 Part 2: three policy rules for the Bank of England.
 # Formulas from the brief, Part 2. Inputs and sources are listed in README.md.
 # Run with:  python3 part2_rules.py
+import part3
 
 import matplotlib.pyplot as plt
 

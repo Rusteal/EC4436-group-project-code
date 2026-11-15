@@ -62,16 +62,24 @@ def loss(L, U0:float, Rn0:float, T:int = T, a:float = 1, b:float = 1, k:float = 
     x_T1 = 0 
     t = 20
     
+    
     inflation_path = []
     output_gap_path = []
     
-    def loss_t(PIt1, Xt1, Ut, RNt, t, L):
-        return 
+    def loss_t(PIt1, Xt1, Ut, RNt, t, L) -> tuple[float, float, float]:
+        """returns 1) loss; 2) current inflation; 3) current gap  """
+        xt = Xt1 + (PIt1+ (1-b)*RNt - a*Ut)/SIGMA
+        PIt = BETA*PIt1 + K*xt + Ut
+        return (PIt**2 + L*(xt**2), PIt, xt)
     
     while t != 0:
         
 
-        t_loss = 0
+        t_loss = loss_t(Pi_T1, x_T1, ((p**t)*U0), ((p**t)*Rn0), t, L)
+        PIt = 0
+        Xt = 0
+        inflation_path.append(PIt)
+        output_gap_path.append(Xt)
         loss += t_loss
         t -= 1
 

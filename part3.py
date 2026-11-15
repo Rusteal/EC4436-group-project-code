@@ -55,18 +55,22 @@ def loss(L, U0:float, Rn0:float, T:int = T, a:float = 1, b:float = 1, k:float = 
     #create a function like the one for shock(s) recalculate PIt for each new t inside the loop
     """idea: start in period T+1, where inflation and gap are 0, go back it time
     algebraicly derived the equation for period t loss
-    Then can numerically solve the series
+    Then can numerically solve the series for optimal a,b 
     L: lambda given for a particular MP committee member"""
     loss = 0
     Pi_T1 = 0
     x_T1 = 0 
     t = 20
+    
     inflation_path = []
     output_gap_path = []
     
+    def loss_t(PIt1, Xt1, Ut, RNt, t, L):
+        return 
+    
     while t != 0:
         
-        
+
         t_loss = 0
         loss += t_loss
         t -= 1

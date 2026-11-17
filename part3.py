@@ -42,15 +42,15 @@ print(f"Annual identified demand shock pp: {Rnt}") #-2.5
 #now experiements
 
 roles: dict = {
-'hank': 0.05, 
-'hankish centrist':.1, 
-'balanced':.25,
-'dove':1}
+'hawk': {'lambda':0.05, 'a':0, 'b':0}, 
+'hawkish centrist': {'lambda':.1, 'a':0, 'b':0}, 
+'balanced':{'lambda':0.25, 'a':0, 'b':0},
+'dove':{'lambda':1, 'a':0, 'b':0}}
 
 #evaluate a and b
 #need to minimise this function. Not sure how to do that in python
 #there is a function in sci py http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
-def loss(L, U0:float, Rn0:float, T:int = T, a:float = 1, b:float = 1, k:float = K, p:float = P):
+def loss(L, U0:float, Rn0:float, T:int = T, a:float = 1, b:float = 1, k:float = K, p:float = P) -> tuple[float, list, list]:
     #Pi and X determined dynamically inside the loss
     #create a function like the one for shock(s) recalculate PIt for each new t inside the loop
     """idea: start in period T+1, where inflation and gap are 0, go back it time
@@ -60,7 +60,7 @@ def loss(L, U0:float, Rn0:float, T:int = T, a:float = 1, b:float = 1, k:float = 
     loss = 0
     Pi_T1 = 0
     x_T1 = 0 
-    t = 20
+    t = T
     
     
     inflation_path = []
@@ -73,37 +73,59 @@ def loss(L, U0:float, Rn0:float, T:int = T, a:float = 1, b:float = 1, k:float = 
         return (PIt**2 + L*(xt**2), PIt, xt)
     
     while t != 0:
-        
-
-        t_loss = loss_t(Pi_T1, x_T1, ((p**t)*U0), ((p**t)*Rn0), t, L)
-        PIt = 0
-        Xt = 0
-        inflation_path.append(PIt)
-        output_gap_path.append(Xt)
-        loss += t_loss
+        t_loss = loss_t(Pi_T1, x_T1, ((p**(t-1))*U0), ((p**(t-1))*Rn0), t, L)
+        inflation_path.append(t_loss[1])
+        output_gap_path.append(t_loss[2])
+        loss += t_loss[0]
+        Pi_T1 = t_loss[1]
+        x_T1 = t_loss[2]
         t -= 1
+        
+    inflation_path.reverse()
+    output_gap_path.reverse()
+        
+    return (loss, inflation_path, output_gap_path)
 
-# for name, L in roles.items():
-#     loss(L)
+if __name__ == "__main__":
+    for name, dict in roles.items():
+        from scipy.optimize import minimize 
+        min_a_b = minimize(fun=lambda params: loss(dict['lambda'], Ut, Rnt,a=params[0],b=params[1])[0], x0=[1.0, 1.0])
+        a_optimal, b_optimal = min_a_b.x
+        roles[name]['a'] = a_optimal
+        roles[name]['b'] = b_optimal
+        #diagnostics, can be commneted out
+        print(f"{name}:")
+        print(f"  a = {a_optimal:.4f}")
+        print(f"  b = {b_optimal:.4f}")
+        print(f"  Loss = {min_a_b.fun:.6f}")
+        print(f"  Converged = {min_a_b.success}")
+    
+    import pandas as pd
+    df = pd.DataFrame.from_dict(roles, orient="index")
+    df.index.name = "role"
+    df = df.reset_index()
+    df.to_csv("roles_a_b.csv", index=False)
+
+
 
 
 def experiment(a, b, Rnt, Ut):
     return(a*Ut + b*Rnt)
 
-#experiment 1
-e1_results = []
+# #experiment 1
+# e1_results = []
 
 
-#3.1
-if __name__ == "__main__":
-    #e1
-    a1=[0,1,2,3]
-    for a in a1:
-        e1 = experiment(a, b=0, 1, 0)
+# #3.1
+# if __name__ == "__main__":
+#     #e1
+#     a1=[0,1,2,3]
+#     for a in a1:
+#         e1 = experiment(a, b=0, 1, 0)
     
-    e1:dict = {
+#     e1:dict = {
         
-    }    
+#     }    
 
-#experiment() #params for 1   
-#experiment() #params for 2 etc.
+# #experiment() #params for 1   
+# #experiment() #params for 2 etc.

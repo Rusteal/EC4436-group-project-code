@@ -40,6 +40,8 @@ print(f"Annual identified demand shock pp: {Rnt}") #-2.5
 #not sure about values tbh, expected inflation arbitrary, taken from the monetary policy public statement
 
 #now experiements
+#before need to find optimal a,b; later noticed that in c) supposed to find a,b thorugh looking into loss tables,
+#but did optimisation below instead, more rigorous, allows for globally optimal a,b instead of best of the list
 
 roles: dict = {
 'hawk': {'lambda':0.05, 'a':0, 'b':0}, 

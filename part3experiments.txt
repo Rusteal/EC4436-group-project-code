@@ -1,0 +1,60 @@
+3.1 MODEL UNITS (per quarter, deviation from long-run average)
+  pi_t = +0.2925   E[pi_t+1] = +0.1250
+  x_t  = -1.1000   E[x_t+1]  = -1.1750
+  i_t  = +0.1250   (r* = 1.25)
+
+3.2 IDENTIFIED SHOCKS
+  cost-push u_1 = +0.3117 per quarter = +1.25 pp of annual inflation
+  demand   rn_1 = +0.0750 per quarter = +0.30 pp of the annual natural rate
+
+EXPERIMENT 1: demand shock alone (rn_1 = 1, u = 0, a = 0), vary b
+   b      x_1     pi_1              hawk  hawkish centrist          balanced              dove
+   0   1.3028   0.2112           0.13485           0.22325           0.48845           1.81445
+ 0.5   0.6514   0.1056           0.03371           0.05581           0.12211           0.45361
+   1   0.0000   0.0000           0.00000           0.00000           0.00000           0.00000
+ 1.5  -0.6514  -0.1056           0.03371           0.05581           0.12211           0.45361
+best b: hawk 1, hawkish centrist 1, balanced 1, dove 1
+
+EXPERIMENT 2: cost-push shock alone (u_1 = 1, rn = 0, b = 0), vary a
+   a      x_1     pi_1              hawk  hawkish centrist          balanced              dove
+   0   0.3249   1.2995           1.76468           1.77018           1.78667           1.86913
+ 0.5  -0.3265   1.1940           1.49048           1.49604           1.51269           1.59598
+   1  -0.9779   1.0884           1.28371           1.33352           1.48294           2.23005
+ 1.5  -1.6293   0.9828           1.14436           1.28263           1.69741           3.77135
+   2  -2.2807   0.8772           1.07245           1.34336           2.15611           6.21986
+   3  -3.5835   0.6660           1.13089           1.79971           3.80619          13.83856
+best a: hawk 2, hawkish centrist 1.5, balanced 1, dove 0.5
+
+EXPERIMENT 3: both shocks at identified values, rho = 0.2
+loss grid for the hawk (lambda = 0.05), rows a, columns b
+              b=0     b=0.5       b=1     b=1.5
+a=0        0.1867    0.1789    0.1715    0.1645
+a=0.5      0.1569    0.1507    0.1449    0.1394
+a=1        0.1336    0.1290    0.1248    0.1209
+a=1.5      0.1169    0.1139    0.1112    0.1089
+a=2        0.1068    0.1053    0.1042    0.1035
+a=3        0.1061    0.1078    0.1099    0.1124
+
+member                a    b      loss      i_1  annual rate   change
+hawk                  2  1.5    0.1035   0.7360        6.19%   +244bp
+hawkish centrist    1.5    1    0.1247   0.5426        5.42%   +167bp
+balanced              1    0    0.1426   0.3117        4.50%    +75bp
+dove                0.5  0.5    0.1534   0.1934        4.02%    +27bp
+
+3.4(a) RE-RUN AT rho = 0.3
+  shocks: the identification uses the survey's expectations directly and rho does not
+  enter it, so u_1 = +1.25 pp and rn_1 = +0.30 pp annual, unchanged
+loss grid for the hawk (lambda = 0.05), rows a, columns b
+              b=0     b=0.5       b=1     b=1.5
+a=0        0.2839    0.2703    0.2572    0.2449
+a=0.5      0.2313    0.2203    0.2098    0.2000
+a=1        0.1895    0.1811    0.1732    0.1661
+a=1.5      0.1585    0.1527    0.1475    0.1429
+a=2        0.1384    0.1351    0.1325    0.1306
+a=3        0.1305    0.1325    0.1351    0.1383
+
+member                a    b      loss      i_1  annual rate   change
+hawk                  3    0    0.1305   0.9352        6.99%   +324bp
+hawkish centrist      2    0    0.1612   0.6235        5.74%   +199bp
+balanced              1    1    0.1901   0.3867        4.80%   +105bp
+dove                0.5  1.5    0.2092   0.2684        4.32%    +57bp

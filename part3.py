@@ -22,9 +22,9 @@ T = 20
 #ideally have data for q3, expected inflation can be for q4? q1? Avarage of those? Hard to pin down
 gap = -1.1 # table says no convertion, makes sence if you think about it
 E_gap = -1.1 # not sure where to get, OBR has -1.1 for all future, futher forcast is not specified
-#use unempployemnt as a proxy???
+#use unempployemnt as a proxy??? have justification, flat projection in OBR up until mid 2027, report made in Oct26
 PIt = (3.17 - 2)/4 
-E_PIt1 = (5-2)/4
+E_PIt1 = (2.5-2)/4 #to change based on data
 It = (3.75/4 - 1.25/4 - 0.5) #should be at neutral lvl, taken from the table page 4 of the brief
 
 def idendify_cost_push_shock_q(PIt, E_PIt1, Xt, beta=BETA, k=K) -> float:
@@ -35,9 +35,8 @@ def idendify_demand_shock_q(It, E_PIt1, Xt, E_Xt1, sigma=SIGMA) -> float:
 
 Ut = 4*idendify_cost_push_shock_q(PIt, E_PIt1, gap)
 Rnt = 4*idendify_demand_shock_q(It, E_PIt1, gap, E_gap)
-print(f"Annual identified cost push shock pp: {Ut}") # -1.22799999999
-print(f"Annual identified demand shock pp: {Rnt}") #-2.5
-#not sure about values tbh, expected inflation arbitrary, taken from the monetary policy public statement
+print(f"Annual identified cost push shock pp: {Ut}") 
+print(f"Annual identified demand shock pp: {Rnt}") 
 
 #now experiements
 #before need to find optimal a,b; later noticed that in c) supposed to find a,b thorugh looking into loss tables,
@@ -88,29 +87,68 @@ def loss(L, U0:float, Rn0:float, T:int = T, a:float = 1, b:float = 1, k:float = 
         
     return (loss, inflation_path, output_gap_path)
 
-if __name__ == "__main__":
-    for name, dict in roles.items():
-        from scipy.optimize import minimize 
-        min_a_b = minimize(fun=lambda params: loss(dict['lambda'], Ut, Rnt,a=params[0],b=params[1])[0], x0=[1.0, 1.0])
-        a_optimal, b_optimal = min_a_b.x
-        roles[name]['a'] = a_optimal
-        roles[name]['b'] = b_optimal
-        #diagnostics, can be commneted out
-        print(f"{name}:")
-        print(f"  a = {a_optimal:.4f}")
-        print(f"  b = {b_optimal:.4f}")
-        print(f"  Loss = {min_a_b.fun:.6f}")
-        print(f"  Converged = {min_a_b.success}")
+import pandas as pd
+#will be used a few times, so easier with a function
+def roles_to_csv(roles:dict, csv_name:str) -> pd.DataFrame:
     
-    import pandas as pd
     df = pd.DataFrame.from_dict(roles, orient="index")
     df.index.name = "role"
     df = df.reset_index()
-    df.to_csv("roles_a_b.csv", index=False)
+    df.to_csv(csv_name, index=False)
+    return df
+    
+if __name__ == "__main__":
+    #Experiment 3 extended, globally optimal a,b
+    def find_optimal_a_b_all_roles(roles:dict, U0, Rn0, p:float=P, save_to_csv:bool = True, csv_name:str = "roles_a_b.csv")-> dict:
+        roles_local = roles.copy()
+        for name, dict in roles_local.items():
+            from scipy.optimize import minimize 
+            min_a_b = minimize(fun=lambda params: loss(dict['lambda'], Ut, Rnt, p=p, a=params[0],b=params[1])[0], x0=[1.0, 1.0])
+            a_optimal, b_optimal = min_a_b.x
+            roles_local[name]['a'] = a_optimal
+            roles_local[name]['b'] = b_optimal
+            #diagnostics, can be commneted out
+            print(f"{name}:")
+            print(f"  a = {a_optimal:.4f}")
+            print(f"  b = {b_optimal:.4f}")
+            print(f"  Loss = {min_a_b.fun:.6f}")
+            print(f"  Converged = {min_a_b.success}")
+        
+        if save_to_csv:
+            roles_to_csv(roles_local, csv_name)
+        
+        return roles_local
+    
+    #Experiment 3 run
+    roles_p_2 = find_optimal_a_b_all_roles(roles, Ut, Rnt, save_to_csv=False,  csv_name="roles_a_b_p=.2.csv")
+    def optimal_i(Rnt, Ut, a, b)-> float:
+        return a*Ut + b*Rnt
+    
+    # find appropriate i
+    optimal_i_for_roles = []
+    
+    for role, items in roles_p_2.items():
+        roles_p_2[role]['i'] = optimal_i(Rnt, Ut, roles_p_2[role]['a'], roles_p_2[role]['b'])
+        roles_p_2[role]['U0'] = Ut
+        roles_p_2[role]['Rn0'] = Rnt
+    
+    roles_to_csv(roles_p_2, "optimal_i_for_roles_p=.2.csv")    
+        
+    
+    #part 3.4
+    roles_p_3 = find_optimal_a_b_all_roles(roles, Ut, Rnt, p=.3, save_to_csv=False, csv_name="roles_a_b_p=.3.csv")
+    for role, items in roles_p_3.items():
+        roles_p_3[role]['i'] = optimal_i(Rnt, Ut, roles_p_2[role]['a'], roles_p_2[role]['b'])
+        roles_p_3[role]['U0'] = Ut
+        roles_p_3[role]['Rn0'] = Rnt
+        
+    roles_to_csv(roles_p_2, "optimal_i_for_roles_p=.3.csv") 
 
-
-
-
+    
+    
+    
+    
+    
 def experiment(a, b, Rnt, Ut):
     return(a*Ut + b*Rnt)
 

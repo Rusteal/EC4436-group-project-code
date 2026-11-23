@@ -21,10 +21,10 @@ T = 20
 
 #ideally have data for q3, expected inflation can be for q4? q1? Avarage of those? Hard to pin down
 gap = -1.1 # table says no convertion, makes sence if you think about it
-E_gap = -1.1 # not sure where to get, OBR has -1.1 for all future, futher forcast is not specified
+E_gap = -1.0 # not sure where to get, OBR has -1.1 for all future, futher forcast is not specified
 #use unempployemnt as a proxy??? have justification, flat projection in OBR up until mid 2027, report made in Oct26
 PIt = (3.17 - 2)/4 
-E_PIt1 = (2.5-2)/4 #to change based on data
+E_PIt1 = (2.5-2)/4 #to change based on data. OBE, q4 2027 is 4%; median MAPS is 2.5, questioneer
 It = (3.75/4 - 1.25/4 - 0.5) #should be at neutral lvl, taken from the table page 4 of the brief
 
 def idendify_cost_push_shock_q(PIt, E_PIt1, Xt, beta=BETA, k=K) -> float:
@@ -142,30 +142,4 @@ if __name__ == "__main__":
         roles_p_3[role]['U0'] = Ut
         roles_p_3[role]['Rn0'] = Rnt
         
-    roles_to_csv(roles_p_2, "optimal_i_for_roles_p=.3.csv") 
-
-    
-    
-    
-    
-    
-def experiment(a, b, Rnt, Ut):
-    return(a*Ut + b*Rnt)
-
-# #experiment 1
-# e1_results = []
-
-
-# #3.1
-# if __name__ == "__main__":
-#     #e1
-#     a1=[0,1,2,3]
-#     for a in a1:
-#         e1 = experiment(a, b=0, 1, 0)
-    
-#     e1:dict = {
-        
-#     }    
-
-# #experiment() #params for 1   
-# #experiment() #params for 2 etc.
+    roles_to_csv(roles_p_2, "optimal_i_for_roles_p=.3.csv")

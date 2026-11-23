@@ -24,7 +24,7 @@ gap = -1.1 # table says no convertion, makes sence if you think about it
 E_gap = -1.0 # not sure where to get, OBR has -1.1 for all future, futher forcast is not specified
 #use unempployemnt as a proxy??? have justification, flat projection in OBR up until mid 2027, report made in Oct26
 PIt = (3.17 - 2)/4 
-E_PIt1 = (2.5-2)/4 #to change based on data. OBE, q4 2027 is 4%; median MAPS is 2.5, questioneer
+E_PIt1 = (2.5-2)/4 #to change based on data. OBE, q4 2027 is 4%, if have 4%, rates are negative, so use 2.5; median MAPS is 2.5, questioneer
 It = (3.75/4 - 1.25/4 - 0.5) #should be at neutral lvl, taken from the table page 4 of the brief
 
 def idendify_cost_push_shock_q(PIt, E_PIt1, Xt, beta=BETA, k=K) -> float:

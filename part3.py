@@ -22,10 +22,11 @@ T = 20
 #ideally have data for q3, expected inflation can be for q4? q1? Avarage of those? Hard to pin down
 gap = -1.1 # table says no convertion, makes sence if you think about it
 E_gap = -1.0 # not sure where to get, OBR has -1.1 for all future, futher forcast is not specified
+#-1.0 figure exists in Monetary policy report, prediction for Q4 2026
 #use unempployemnt as a proxy??? have justification, flat projection in OBR up until mid 2027, report made in Oct26
 PIt = (3.17 - 2)/4 
 E_PIt1 = (2.5-2)/4 #to change based on data. OBE, q4 2027 is 4%, if have 4%, rates are negative, so use 2.5; median MAPS is 2.5, questioneer
-It = (3.75/4 - 1.25/4 - 0.5) #should be at neutral lvl, taken from the table page 4 of the brief
+It = (3.75/4 - 1.25/4 - 0.5) #should be at neutral lvl, taken from the table page 4 of the brief, actually evaluates to 0
 
 def idendify_cost_push_shock_q(PIt, E_PIt1, Xt, beta=BETA, k=K) -> float:
     return(PIt - beta*E_PIt1 - k*Xt)
@@ -33,10 +34,10 @@ def idendify_cost_push_shock_q(PIt, E_PIt1, Xt, beta=BETA, k=K) -> float:
 def idendify_demand_shock_q(It, E_PIt1, Xt, E_Xt1, sigma=SIGMA) -> float:
     return(It - E_PIt1 + sigma*(Xt-E_Xt1))
 
-Ut = 4*idendify_cost_push_shock_q(PIt, E_PIt1, gap)
-Rnt = 4*idendify_demand_shock_q(It, E_PIt1, gap, E_gap)
-print(f"Annual identified cost push shock pp: {Ut}") 
-print(f"Annual identified demand shock pp: {Rnt}") 
+Ut = idendify_cost_push_shock_q(PIt, E_PIt1, gap)
+Rnt = idendify_demand_shock_q(It, E_PIt1, gap, E_gap)
+print(f"Annual identified cost push shock pp: {Ut*4}") 
+print(f"Annual identified demand shock pp: {Rnt*4}") 
 
 #now experiements
 #before need to find optimal a,b; later noticed that in c) supposed to find a,b thorugh looking into loss tables,
@@ -94,7 +95,7 @@ def roles_to_csv(roles:dict, csv_name:str) -> pd.DataFrame:
     df = pd.DataFrame.from_dict(roles, orient="index")
     df.index.name = "role"
     df = df.reset_index()
-    df.to_csv(csv_name, index=False)
+    df.to_csv(csv_name, index=False, float_format="%.3f")
     return df
     
 if __name__ == "__main__":
@@ -103,7 +104,7 @@ if __name__ == "__main__":
         roles_local = roles.copy()
         for name, dict in roles_local.items():
             from scipy.optimize import minimize 
-            min_a_b = minimize(fun=lambda params: loss(dict['lambda'], Ut, Rnt, p=p, a=params[0],b=params[1])[0], x0=[1.0, 1.0])
+            min_a_b = minimize(fun=lambda params: loss(dict['lambda'], U0, Rn0, p=p, a=params[0],b=params[1])[0], x0=[1.0, 1.0])
             a_optimal, b_optimal = min_a_b.x
             roles_local[name]['a'] = a_optimal
             roles_local[name]['b'] = b_optimal
@@ -122,15 +123,16 @@ if __name__ == "__main__":
     #Experiment 3 run
     roles_p_2 = find_optimal_a_b_all_roles(roles, Ut, Rnt, save_to_csv=False,  csv_name="roles_a_b_p=.2.csv")
     def optimal_i(Rnt, Ut, a, b)-> float:
-        return a*Ut + b*Rnt
+        return a*Ut*4 + b*Rnt*4
     
     # find appropriate i
     optimal_i_for_roles = []
     
     for role, items in roles_p_2.items():
-        roles_p_2[role]['i'] = optimal_i(Rnt, Ut, roles_p_2[role]['a'], roles_p_2[role]['b'])
-        roles_p_2[role]['U0'] = Ut
-        roles_p_2[role]['Rn0'] = Rnt
+        roles_p_2[role]['i_from_neutral'] = optimal_i(Rnt, Ut, roles_p_2[role]['a'], roles_p_2[role]['b'])
+        roles_p_2[role]['i_bank_rate_annual'] = 3.25 + roles_p_2[role]['i_from_neutral']
+        roles_p_2[role]['U0'] = Ut*4
+        roles_p_2[role]['Rn0'] = Rnt*4
     
     roles_to_csv(roles_p_2, "optimal_i_for_roles_p=.2.csv")    
         
@@ -138,8 +140,9 @@ if __name__ == "__main__":
     #part 3.4
     roles_p_3 = find_optimal_a_b_all_roles(roles, Ut, Rnt, p=.3, save_to_csv=False, csv_name="roles_a_b_p=.3.csv")
     for role, items in roles_p_3.items():
-        roles_p_3[role]['i'] = optimal_i(Rnt, Ut, roles_p_2[role]['a'], roles_p_2[role]['b'])
-        roles_p_3[role]['U0'] = Ut
-        roles_p_3[role]['Rn0'] = Rnt
+        roles_p_3[role]['i_from_neutral'] = optimal_i(Rnt, Ut, roles_p_2[role]['a'], roles_p_2[role]['b'])
+        roles_p_3[role]['i_bank_rate_annual'] = 3.25 + roles_p_3[role]['i_from_neutral']
+        roles_p_3[role]['U0'] = Ut*4
+        roles_p_3[role]['Rn0'] = Rnt*4
         
     roles_to_csv(roles_p_2, "optimal_i_for_roles_p=.3.csv")

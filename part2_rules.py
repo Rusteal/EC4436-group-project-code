@@ -42,7 +42,7 @@ history = [
 
 #may change history format for proper code quality, but does not matter really
 def rules_vs_historical(history, r: float = 1.25, saveplot: bool = True, showplot: bool = False) -> None:
-    r = 0
+    
     quarters, actual, tay, bal, ine = [], [], [], [], []
     print("\nquarter  Bank Rate  Taylor  Balanced  Inertial")
     for q, cpi, x, rate, prev in history:

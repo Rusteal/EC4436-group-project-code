@@ -26,7 +26,8 @@ E_gap = -1.0 # not sure where to get, OBR has -1.1 for all future, futher forcas
 #use unempployemnt as a proxy??? have justification, flat projection in OBR up until mid 2027, report made in Oct26
 PIt = (3.17 - 2)/4 
 E_PIt1 = (2.5-2)/4 #to change based on data. OBE, q4 2027 is 4%, if have 4%, rates are negative, so use 2.5; median MAPS is 2.5, questioneer
-It = (3.75/4 - 1.25/4 - 0.5) #should be at neutral lvl, taken from the table page 4 of the brief, actually evaluates to 0
+POLICY_RATE = 3.75
+It = (POLICY_RATE/4 - 1.25/4 - 0.5) #should be at neutral lvl, taken from the table page 4 of the brief, actually evaluates to 0
 
 def idendify_cost_push_shock_q(PIt, E_PIt1, Xt, beta=BETA, k=K) -> float:
     return(PIt - beta*E_PIt1 - k*Xt)
@@ -131,10 +132,11 @@ if __name__ == "__main__":
     for role, items in roles_p_2.items():
         roles_p_2[role]['i_from_neutral'] = optimal_i(Rnt, Ut, roles_p_2[role]['a'], roles_p_2[role]['b'])
         roles_p_2[role]['i_bank_rate_annual'] = 3.25 + roles_p_2[role]['i_from_neutral']
+        roles_p_2[role]['i_t'] = It*4 + 3.25
         roles_p_2[role]['U0'] = Ut*4
         roles_p_2[role]['Rn0'] = Rnt*4
     
-    roles_to_csv(roles_p_2, "optimal_i_for_roles_p=.2.csv")    
+    roles_to_csv(roles_p_2, f"optimal_i_for_roles_p=.2_i={POLICY_RATE}.csv")    
         
     
     #part 3.4
@@ -142,7 +144,8 @@ if __name__ == "__main__":
     for role, items in roles_p_3.items():
         roles_p_3[role]['i_from_neutral'] = optimal_i(Rnt, Ut, roles_p_2[role]['a'], roles_p_2[role]['b'])
         roles_p_3[role]['i_bank_rate_annual'] = 3.25 + roles_p_3[role]['i_from_neutral']
+        roles_p_3[role]['i_t'] = It*4 + 3.25
         roles_p_3[role]['U0'] = Ut*4
         roles_p_3[role]['Rn0'] = Rnt*4
         
-    roles_to_csv(roles_p_2, "optimal_i_for_roles_p=.3.csv")
+    roles_to_csv(roles_p_2, f"optimal_i_for_roles_p=.3_i={POLICY_RATE}.csv")

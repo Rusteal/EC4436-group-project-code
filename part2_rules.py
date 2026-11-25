@@ -44,21 +44,22 @@ history = [
 def rules_vs_historical(history, r: float = 1.25, saveplot: bool = True, showplot: bool = False) -> None:
     
     quarters, actual, tay, bal, ine = [], [], [], [], []
-    print("\nquarter  Bank Rate  Taylor  Balanced  Inertial")
+    print(f"\ntable for r*={r}")
+    print("quarter\tBank Rate\tTaylor\tBalanced\tInertial")
     for q, cpi, x, rate, prev in history:
         quarters.append(q)
         actual.append(rate)
         tay.append(taylor(r, cpi, x))
         bal.append(balanced(r, cpi, x))
         ine.append(inertial(r, cpi, x, prev))
-        print(f"{q}  {rate:9.2f}  {tay[-1]:6.2f}  {bal[-1]:8.2f}  {ine[-1]:8.2f}")
+        print(f"{q}\t{rate:.2f}\t{tay[-1]:.2f}\t{bal[-1]:.2f}\t{ine[-1]:.2f}")
 
-    print("\nAverage distance from Bank Rate, percentage points")
+    print(f"\nAverage distance from Bank Rate, percentage points (r*={r})")
     for name, rule in [("Taylor", tay), ("Balanced", bal), ("Inertial", ine)]:
         distance = sum(abs(p - a) for p, a in zip(rule, actual)) / len(actual)
-        print(f"{name:9} {distance:.2f}")
+        print(f"{name:9}\t{distance:.2f}")
 
-
+    fig = plt.figure()
     # ---- Chart ----
     plt.plot(quarters, actual, "k-o", linewidth=2.5, label="Bank Rate")
     plt.plot(quarters, tay, "-o", label="Taylor (1993)")
@@ -70,8 +71,10 @@ def rules_vs_historical(history, r: float = 1.25, saveplot: bool = True, showplo
     plt.grid(alpha=0.3)
     if showplot:
         plt.show()
+    else:
+        plt.close(fig)
     if saveplot:
-        plt.savefig(f"part2_rules_history_r{r}.png", dpi=150)
+        fig.savefig(f"part2_rules_history_r{r}.png", dpi=150)
         print(f"\nSaved part2_rules_history_r{r}.png")
 
 if __name__ == "__main__":
@@ -92,5 +95,4 @@ Bank has proven itself to be competent and accumulated a lot of credibility henc
 One could agrue that Bank's primary objective is to maintain price stability therfore Taylor can be more approprite rule
 Members of monetary policy commitee may have their own views on which rule is more appropriate and this will (or can) be reflected in hte minutes and their personal statements 
 c) It seems that r* heavilly affect Taylor and Balanced rules, meanwhile inertial is being affected by r* but not as much (as expected as it takes only .15 of balanced), this was obvious from the rules definition
-
 """

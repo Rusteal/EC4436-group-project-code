@@ -1,0 +1,111 @@
+Moodle -  2026_7_S1_EC4436: Re: Group Project
+Giacomo Cattelan<gc241@st-andrews.ac.uk>
+
+2026_7_S1_EC4436 » Forums » Announcements » Group Project
+GC	
+Re: Group Project
+by Giacomo Cattelan - Friday, 30 October 2026, 08:53
+ 	
+Hi all,
+
+The project brief is (finally) online. You are now free to read it and start working on it.
+
+I reorganized the spreadsheet with the groups, so now each group is assigned a column and each member of the group is listed below the group number. Please take a look at the spreadsheet again to confirm the group you are in. If you still haven't put your name down in the spreadsheet, please do so by Monday.
+
+Have a nice weekend.
+
+Giacomo
+Show parent
+See this post in context
+Change your forum digest preferences
+Giacomo Cattelan<gc241@st-andrews.ac.uk>
+
+2026_7_S1_EC4436 » Forums » Announcements » Group Project
+GC	
+Re: Group Project
+by Giacomo Cattelan - Friday, 6 November 2026, 10:47
+ 	
+Hi all.
+
+As you may already know, the BoE MPC met yesterday releasing new data that is relevant for the group project. For Part 2 and 3 and Appendix A, use only data and surveys published on or before 5 November 2026. In practice for the UK this means: Q3 CPI inflation, the latest OBR output gap estimate, the September Bank of England Market Participants Survey and, if you use the Bank’s projections as your alternative source or to cross-check the output gap, the July 2026 Monetary Policy Report. This mirrors the data cut-off central banks use for their forecasts and ensures all groups work from the same information. Note that the rise in Bank Rate to 4% took effect in Q4, after the cut-off, so it should not enter your model inputs: use 3.75% for both the latest quarter (Q3) and the quarter before. 
+
+If you chose the US as your reference country, please apply the same cutoff. In practice, use Q3 GDP and inflation, the September NY Fed Survey of Market Expectations. For the policy rate, use the Q3 and Q2 averages of FEDFUNDS; the Q3 average already reflects the September rise.
+
+Your briefings and minutes should still reflect everything published before your meeting, including the October FOMC decision and the Bank of England’s 5 November decision and Monetary Policy Report. Add a paragraph to your minutes to discuss what has changed since the cut-off and whether it would alter the model’s conclusion.
+
+Please note that this instruction takes precedence over the brief where the two differ. In particular, Appendix A tells you to use “the latest survey published before your deadline” and to cross-check the UK output gap against the November Monetary Policy Report, and the vintage rule in Part 1 refers to data published before your meeting date. For the model inputs (Parts 2 and 3), the 4 November cut-off replaces all three; for your briefings and minutes, the vintage rule still applies.
+ 
+I wish you a nice weekend.
+ 
+Giacomo
+Show parent
+See this post in context
+Change your forum digest preferences
+Giacomo Cattelan<gc241@st-andrews.ac.uk>
+
+2026_7_S1_EC4436 » Forums » Announcements » Group Project
+GC	
+Re: Group Project
+by Giacomo Cattelan - Monday, 9 November 2026, 14:24
+ 	
+Hi all
+
+I just added a column in the spreadsheet assigning the roles you will have to "play" in 3.3 of the project. Please take a look.
+
+See you at the tutorials tomorrow.
+
+Giacomo
+Show parent
+See this post in context
+Change your forum digest preferences
+Giacomo Cattelan<gc241@st-andrews.ac.uk>
+
+2026_7_S1_EC4436 » Forums » Announcements » Group Project
+GC	
+Re: Group Project
+by Giacomo Cattelan - Friday, 20 November 2026, 13:32
+ 	
+Dear all,
+
+I realized I have not given clear instructions on the length and structure of the Minutes to be submitted. This is intentional as I want to give you as much flexibility as possible, but this message is meant to clarify things a little further.
+
+The overall length of the Minutes should be about 2000 words. The structure should be as follows.
+- 1 paragraph (~200 words) for each of the sectors you investigated, in which you summarize your findings to inform your colleagues on the state of your sector.
+- 1-2 paragraphs (~500 words) commenting on model results and policy rules. This should include the nature of identified shocks and what they imply; the prescriptions of the Part 2 rules. It is advised to include one table summarising every member’s results for the Experiments:
+Member | Mandate (λ) | Exp. 1: best $b$ | Exp. 2: best $a$ | Exp. 3: best $(a, b)$ | Implied policy rate
+Comment on the main differences between outcomes across various members and what is driving them.
+- 1 paragraph (~200 words) for each member of the group following the outline of Section "MPC members’ views on Bank Rate" in the BoE minutes. Here you will report your own view and vote based on both the sector brief, the model simulations, and the subsequent discussion with your colleagues.
+- 1 concluding paragraph (~100 words) summarizing the discussion and stating the final decision: the vote (e.g. 3–1), the policy rate as a level, the likely path ahead, and the names of any dissenting members and the rate they preferred.
+
+All the charts and tables you find relevant in both the sector brief and the Minutes can be included in an Appendix and not included in the word count.
+
+I hope this clarifies the instructions. As usual, let me know if there are further doubts.
+
+All the best,
+
+Giacomo
+Show parent
+See this post in context
+Change your forum digest preferences
+Giacomo Cattelan<gc241@st-andrews.ac.uk>
+
+2026_7_S1_EC4436 » Forums » Announcements » Group Project
+GC	
+Re: Group Project
+by Giacomo Cattelan - Friday, 20 November 2026, 15:51
+ 	
+Hi all
+
+I just wanted to add something quick about the submission process.
+
+Please submit ONLY ONE document per group, containing all of you sector briefs, the minutes, the monetary policy statement and the individual memo. The model output should be submitted submitted as a separate file and be runnable, so that it shows your workings. 
+ 
+IMPORTANT: include the names and IDs of all the group members who contributed to the project on the cover sheet of the final document.
+ 
+The submission link should be on the MMS page of the module. Students with submission issues should be directed to econadmin@.
+ 
+Best,
+Giacomo
+Show parent
+See this post in context
+Change your forum digest preferences
